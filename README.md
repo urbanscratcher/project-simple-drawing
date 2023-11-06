@@ -7,6 +7,10 @@
 - p5js DOM 연습
 - 드로잉 툴 원리 익히기
 
+## 데모
+[demo-drawing.webm](https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133)
+
+
 ## URL
 
 - https://joun-drawing.netlify.app

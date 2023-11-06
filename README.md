@@ -7,6 +7,14 @@
 - p5js DOM 연습
 - 드로잉 툴 원리 익히기
 
+## 기능
+- 자유선 (색상, 굵기 선택)
+- 직선 (색상, 굵기 선택)
+- 지우개 (굵기 선택)
+- 스프레이 (색상 선택)
+- 모두 지우기
+- png 파일로 저장
+
 ## 데모
 [demo-drawing.webm](https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133)
 
@@ -15,7 +23,7 @@
 
 - https://joun-drawing.netlify.app
 
-## 사용 라이브러리
+## 사용 라이브러리 & 기술
 
 - p5js
 - p5js DOM

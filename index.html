@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drawWord</title>
+
+    <!-- p5js + addons -->
+    <script src="./lib/p5.min.js"></script>
+    <script src="./lib/p5.dom.js"></script>
+
+    <!-- extra -->
+    <script src="sketch.js"></script>
+    <script src="toolbox.js"></script>
+    <script src="helpers.js"></script>
+
+    <!-- tools -->
+    <script src="./tools/freehandTool.js"></script>
+    <script src="./tools/lineTool.js"></script>
+    <script src="./tools/sprayTool.js"></script>
+    <script src="./tools/bgColorTool.js"></script>
+    <script src="./tools/eraserTool.js"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <p class="logo">Simple Drawing :]</p>
+        <ul class="menu">
+          <img src="assets/clear.svg" class="clear btn" />
+          <img src="assets/save.svg" class="save btn" />
+        </ul>
+      </header>
+      <ul class="box sidebar"></ul>
+      <div class="canvasContainer"></div>
+      <div class="box optionMenu">
+        <input
+          type="color"
+          id="bgColorPalette"
+          value="#ffffff"
+          class="hidden"
+        />
+        <input type="color" id="colorPalette" class="hidden" />
+        <input
+          type="range"
+          min="1"
+          max="100"
+          value="1"
+          step="1"
+          id="thickness"
+          class="hidden"
+        />
+        <p id="thicknessLabel" class="hidden">1</p>
+      </div>
+    </div>
+  </body>
+</html>

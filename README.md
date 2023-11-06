@@ -14,6 +14,7 @@
 - 스프레이 (색상 선택)
 - 모두 지우기
 - png 파일로 저장
+- 다른 도구를 선택해도 색상, 굵기 등 옵션 상태가 유지될 수 있도록 함
 
 ## 데모
 [demo-drawing.webm](https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133)

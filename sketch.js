@@ -3,7 +3,6 @@ let toolbox = null;
 function setup() {
   // Create a canvas
   const containerEl = select(".canvasContainer");
-  console.log(containerEl);
 
   const canvasEl = createCanvas(
     containerEl.size().width,

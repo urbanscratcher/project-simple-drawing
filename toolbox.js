@@ -62,9 +62,7 @@ function Toolbox() {
   // add a new tool to html
   function addToolIcon(tool) {
     // make image element
-    const imgEl = createImg(tool.icon, tool.name, () => {
-      console.log("successfully loaded: " + tool.name);
-    });
+    const imgEl = createImg(tool.icon, tool.name);
 
     // let image element in list
     const liEl = createElement("li");

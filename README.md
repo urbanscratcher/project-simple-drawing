@@ -36,3 +36,4 @@
 - undo/redo
 - zoom
 - 3D 모델(.obj) 불러오기
+- 최종: random word 던져주고 타이머 맞춰서 그림 그리도록 하는 기능

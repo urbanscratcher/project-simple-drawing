@@ -41,4 +41,7 @@
 - undo/redo
 - zoom
 - 3D 모델(.obj) 불러오기
-- 최종: random word 던져주고 타이머 맞춰서 그림 그리도록 하는 기능
+- [ ] key press 이벤트 -> weight 조정
+- 발전 아이디어
+  - random word 던져주고 타이머 맞춰서 그림 그리도록 하는 기능
+  - 아니면 abstract art -> 사용 빈도가 높은 색 분석

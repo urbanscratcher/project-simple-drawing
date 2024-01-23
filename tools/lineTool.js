@@ -24,20 +24,26 @@ function LineTool() {
     self.color = select("#colorPalette")?.value() || "black";
     self.thickness = select("#thickness")?.value() || 1;
 
-    if (mouseIsPressed) {
-      if (startMouseX === -1) {
-        startMouseX = mouseX;
-        startMouseY = mouseY;
-        drawing = true;
-        loadPixels();
-      } else {
-        updatePixels();
+    // conditions
+    const isStart = mouseIsPressed && startMouseX === -1;
+    const isMoving = mouseIsPressed && startMouseX !== -1;
+    const isEnd = !mouseIsPressed && drawing;
 
-        stroke(self.color);
-        strokeWeight(self.thickness);
-        line(startMouseX, startMouseY, mouseX, mouseY);
-      }
-    } else if (drawing) {
+    if (isStart) {
+      startMouseX = mouseX;
+      startMouseY = mouseY;
+      drawing = true;
+      loadPixels();
+    }
+
+    if (isMoving) {
+      updatePixels();
+      stroke(self.color);
+      strokeWeight(self.thickness);
+      line(startMouseX, startMouseY, mouseX, mouseY);
+    }
+
+    if (isEnd) {
       drawing = false;
       startMouseX = -1;
       startMouseY = -1;

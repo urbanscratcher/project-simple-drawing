@@ -5,6 +5,7 @@ function LineTool() {
   this.icon = "assets/line.svg";
   this.name = "line";
   this.draw = draw;
+  this.showBrush = showBrush;
 
   // local properties
   this.options = ["colorPalette", "thickness"];
@@ -19,6 +20,14 @@ function LineTool() {
   const adjustWidth = select(".sidebar").size().width;
   const adjustHeight = select("header").height;
 
+  function showBrush() {
+    push();
+    strokeWeight(1);
+    noFill();
+    ellipse(mouseX, mouseY, self.thickness, self.thickness);
+    pop();
+  }
+
   function draw() {
     // optional setting
     self.color = select("#colorPalette")?.value() || "black";
@@ -28,13 +37,15 @@ function LineTool() {
     const isStarting = mouseIsPressed && startMouseX === -1;
     const isDrawing = mouseIsPressed && startMouseX !== -1;
     const isEnding = !mouseIsPressed && drawing;
+    const doingNothing = !mouseIsPressed && !drawing;
 
     if (isStarting) {
+      updatePixels();
       startMouseX = mouseX;
       startMouseY = mouseY;
       drawing = true;
 
-      // loads the current value of each pixel on the canvaas into the 'pixels' array
+      // loads the current value of each pixel on the canvas into the 'pixels' array
       loadPixels();
     }
 
@@ -46,9 +57,15 @@ function LineTool() {
     }
 
     if (isEnding) {
+      loadPixels();
       drawing = false;
       startMouseX = -1;
       startMouseY = -1;
+    }
+
+    if (doingNothing) {
+      updatePixels();
+      showBrush();
     }
   }
 }

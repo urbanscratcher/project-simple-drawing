@@ -26,11 +26,15 @@ function setup() {
 }
 
 function draw() {
-  // [CHECK] any selected tool exists
-  if (toolbox.selectedTool) {
-    // [CHECK] the tool had a draw method before execution
-    toolbox.selectedTool?.hasOwnProperty("draw")
-      ? toolbox.selectedTool.draw()
-      : console.log("the tool has no draw method");
+  const selectedTool = toolbox?.selectedTool;
+
+  if (selectedTool) {
+    const canDraw = selectedTool.hasOwnProperty("draw");
+
+    if (canDraw) {
+      selectedTool.draw();
+    } else {
+      console.log("the tool has no draw method");
+    }
   }
 }

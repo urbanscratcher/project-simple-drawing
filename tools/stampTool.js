@@ -24,6 +24,7 @@ function StampTool() {
     // density txt label
     let densityTxt = createP("Density");
     densityTxt.parent(optionsContainer);
+    densityTxt.class("option");
 
     // density slider
     let densitySlider = createSlider(1, 20, 1, 1);
@@ -42,6 +43,7 @@ function StampTool() {
     // dispersion txt label
     let dispersionTxt = createP("Dispersion");
     dispersionTxt.parent(optionsContainer);
+    dispersionTxt.class("option");
 
     // dispersion slider
     let dispersionSlider = createSlider(10, 100, 10, 10);
@@ -73,7 +75,6 @@ function StampTool() {
     if (isStarting) {
       updatePixels();
       drawing = true;
-      console.log(self.density);
       for (let i = 0; i < self.density; i++) {
         let starSize = self.thickness;
         let starX = random(

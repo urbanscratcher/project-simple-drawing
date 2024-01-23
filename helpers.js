@@ -10,3 +10,23 @@ function HelperFunctions() {
     saveCanvas("myCanvas", "png");
   });
 }
+
+function isMousePressedOnCanvas(canvas) {
+  let result = false;
+
+  const canvasLeft = canvas.elt.offsetLeft;
+  const canvasWidth = canvas.width;
+  const canvasTop = canvas.elt.offsetTop;
+  const canvasHeight = canvas.height;
+
+  if (
+    mouseX > canvasLeft &&
+    mouseX < canvasLeft + canvasWidth &&
+    mouseY > canvasTop &&
+    mouseY < canvasTop + canvasHeight
+  ) {
+    result = true;
+  }
+
+  return result;
+}

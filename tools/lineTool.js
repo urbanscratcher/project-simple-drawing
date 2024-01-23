@@ -21,6 +21,7 @@ function LineTool() {
 
   function showBrush() {
     push();
+    stroke(0);
     strokeWeight(1);
     noFill();
     ellipse(mouseX, mouseY, self.thickness, self.thickness);

@@ -14,9 +14,9 @@ function EraserTool() {
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
-
   function showBrush() {
     push();
+    stroke(0);
     strokeWeight(1);
     noFill();
     ellipse(mouseX, mouseY, self.thickness, self.thickness);

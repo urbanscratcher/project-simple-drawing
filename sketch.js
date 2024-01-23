@@ -1,4 +1,6 @@
+// global variables
 let toolbox = null;
+let canvasEl;
 
 let star;
 function preload() {
@@ -8,10 +10,9 @@ function preload() {
 function setup() {
   // Create a canvas
   const containerEl = select(".canvasContainer");
-
-  const canvasEl = createCanvas(
+  canvasEl = createCanvas(
     containerEl.size().width,
-    containerEl.size().height
+    containerEl.size().height * 0.9
   );
   canvasEl.style("");
   canvasEl.parent(containerEl);
@@ -26,6 +27,7 @@ function setup() {
   toolbox.addTool(new SprayTool());
   toolbox.addTool(new EraserTool());
   toolbox.addTool(new StampTool());
+  toolbox.addTool(new EditableShapeTool());
 
   // Background color setting
   background("#ffffff");

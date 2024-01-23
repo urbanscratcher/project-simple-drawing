@@ -1,15 +1,16 @@
 function EraserTool() {
   const self = this;
 
-  // set an icon, a name, and a draw function
+  // global properties
   this.icon = "assets/eraser.svg";
   this.name = "eraser";
+  this.draw = draw;
 
+  // local properties
   this.options = ["thickness"];
   this.thickness = null;
 
-  this.draw = draw;
-
+  // states
   let previousMouseX = -1;
   let previousMouseY = -1;
 
@@ -17,23 +18,25 @@ function EraserTool() {
     // optional setting
     self.thickness = select("#thickness")?.value() || 1;
 
-    if (mouseIsPressed) {
-      // check if they previous X and Y are -1. set them to the current mouse X and Y if they are.
-      if (previousMouseX == -1) {
-        previousMouseX = mouseX;
-        previousMouseY = mouseY;
-      }
-      // if we already have values for previous X and Y we can draw a line from there to the current location
-      else {
-        stroke("#ffffff");
-        strokeWeight(self.thickness);
-        line(previousMouseX, previousMouseY, mouseX, mouseY);
-        previousMouseX = mouseX;
-        previousMouseY = mouseY;
-      }
+    // conditions
+    const isStarting = mouseIsPressed && previousMouseX === -1;
+    const isErasing = mouseIsPressed && previousMouseY !== -1;
+    const isEnding = !mouseIsPressed;
+
+    if (isStarting) {
+      previousMouseX = mouseX;
+      previousMouseY = mouseY;
     }
-    // if the mouse is released, set the previousMouse values back to -1
-    else {
+
+    if (isErasing) {
+      stroke("#ffffff");
+      strokeWeight(self.thickness);
+      line(previousMouseX, previousMouseY, mouseX, mouseY);
+      previousMouseX = mouseX;
+      previousMouseY = mouseY;
+    }
+
+    if (isEnding) {
       previousMouseX = -1;
       previousMouseY = -1;
     }

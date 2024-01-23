@@ -1,16 +1,17 @@
 function FreehandTool() {
   const self = this;
 
-  // set an icon, a name, and a draw function
+  // global properties
   this.icon = "assets/freehand.svg";
   this.name = "freehand";
+  this.draw = draw;
 
+  // local properties
   this.options = ["colorPalette", "thickness"];
   this.color = null;
   this.thickness = null;
 
-  this.draw = draw;
-
+  // states
   let previousMouseX = -1;
   let previousMouseY = -1;
 
@@ -19,23 +20,25 @@ function FreehandTool() {
     self.color = select("#colorPalette")?.value() || "black";
     self.thickness = select("#thickness")?.value() || 1;
 
-    if (mouseIsPressed) {
-      // check if they previous X and Y are -1. set them to the current mouse X and Y if they are.
-      if (previousMouseX == -1) {
-        previousMouseX = mouseX;
-        previousMouseY = mouseY;
-      }
-      // if we already have values for previous X and Y we can draw a line from there to the current location
-      else {
-        stroke(self.color);
-        strokeWeight(self.thickness);
-        line(previousMouseX, previousMouseY, mouseX, mouseY);
-        previousMouseX = mouseX;
-        previousMouseY = mouseY;
-      }
+    // conditions
+    const isStarting = mouseIsPressed && previousMouseX === -1;
+    const isDrawing = mouseIsPressed && previousMouseX !== -1;
+    const isEnding = !mouseIsPressed;
+
+    if (isStarting) {
+      previousMouseX = mouseX;
+      previousMouseY = mouseY;
     }
-    // if the mouse is released, set the previousMouse values back to -1
-    else {
+
+    if (isDrawing) {
+      stroke(self.color);
+      strokeWeight(self.thickness);
+      line(previousMouseX, previousMouseY, mouseX, mouseY);
+      previousMouseX = mouseX;
+      previousMouseY = mouseY;
+    }
+
+    if (isEnding) {
       previousMouseX = -1;
       previousMouseY = -1;
     }

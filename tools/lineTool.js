@@ -1,20 +1,20 @@
 function LineTool() {
   const self = this;
 
-  // set an icon, a name, and a draw function
+  // global properties
   this.icon = "assets/line.svg";
   this.name = "line";
+  this.draw = draw;
 
+  // local properties
   this.options = ["colorPalette", "thickness"];
   this.color = null;
   this.thickness = null;
 
-  this.draw = draw;
-  this.drawnLines = [];
-
-  var startMouseX = -1;
-  var startMouseY = -1;
-  var drawing = false;
+  // states
+  let startMouseX = -1;
+  let startMouseY = -1;
+  let drawing = false;
 
   const adjustWidth = select(".sidebar").size().width;
   const adjustHeight = select("header").height;
@@ -25,25 +25,27 @@ function LineTool() {
     self.thickness = select("#thickness")?.value() || 1;
 
     // conditions
-    const isStart = mouseIsPressed && startMouseX === -1;
-    const isMoving = mouseIsPressed && startMouseX !== -1;
-    const isEnd = !mouseIsPressed && drawing;
+    const isStarting = mouseIsPressed && startMouseX === -1;
+    const isDrawing = mouseIsPressed && startMouseX !== -1;
+    const isEnding = !mouseIsPressed && drawing;
 
-    if (isStart) {
+    if (isStarting) {
       startMouseX = mouseX;
       startMouseY = mouseY;
       drawing = true;
+
+      // loads the current value of each pixel on the canvaas into the 'pixels' array
       loadPixels();
     }
 
-    if (isMoving) {
+    if (isDrawing) {
       updatePixels();
       stroke(self.color);
       strokeWeight(self.thickness);
       line(startMouseX, startMouseY, mouseX, mouseY);
     }
 
-    if (isEnd) {
+    if (isEnding) {
       drawing = false;
       startMouseX = -1;
       startMouseY = -1;

@@ -1,13 +1,13 @@
 function BgColorTool() {
   const self = this;
 
-  // set an icon, a name, and a draw function
+  // global properties
   this.icon = "assets/bgColor.svg";
   this.name = "bgColor";
-
-  this.options = ["bgColorPalette"];
-
   this.draw = draw;
+
+  // local properties
+  this.options = ["bgColorPalette"];
 
   function draw() {
     const bgColorPaletteEl = select("#bgColorPalette");

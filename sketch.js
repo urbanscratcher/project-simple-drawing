@@ -28,6 +28,7 @@ function setup() {
   toolbox.addTool(new EraserTool());
   toolbox.addTool(new StampTool());
   toolbox.addTool(new EditableShapeTool());
+  toolbox.addTool(new ScissorTool());
 
   // Background color setting
   background("#ffffff");

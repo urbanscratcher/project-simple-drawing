@@ -8,7 +8,7 @@ function EditableShapeTool() {
   this.setup = setup;
 
   // local properties
-  this.options = ["thickness"];
+  this.options = ["colorPalette", "thickness"];
   this.thickness = null;
 
   // states
@@ -18,6 +18,7 @@ function EditableShapeTool() {
   function setup() {
     let optionsContainer = select("#optionsContainer");
 
+    // edit btn
     let editBtn = createButton("Edit Shape");
     editBtn.class("option");
     editBtn.id("editShape");
@@ -33,12 +34,11 @@ function EditableShapeTool() {
       }
     });
 
+    // finish btn
     let finishBtn = createButton("Finish Shape");
     finishBtn.class("option");
     finishBtn.id("finishShape");
     finishBtn.parent(optionsContainer);
-
-    // click finish btn
     finishBtn.mousePressed(() => {
       editing = false;
       editBtn.html("Edit Shape");
@@ -51,8 +51,7 @@ function EditableShapeTool() {
   function draw() {
     // optional setting
     self.thickness = select("#thickness")?.value() || 1;
-
-    updatePixels();
+    self.color = select("#colorPalette")?.value() || "black";
 
     // conditions
     const isStarting = mouseIsPressed && isMousePressedOnCanvas(canvasEl);
@@ -60,6 +59,7 @@ function EditableShapeTool() {
     const isEnding = !mouseIsPressed && editing;
     const doingNothing = !mouseIsPressed && !editing;
 
+    updatePixels();
     if (isStarting) {
       if (!isEditing) {
         currentShape.push({
@@ -79,21 +79,38 @@ function EditableShapeTool() {
     }
 
     beginShape();
+    strokeWeight(self.thickness);
+    fill(self.color);
     for (let i = 0; i < currentShape.length; i++) {
       vertex(currentShape[i].x, currentShape[i].y);
+    }
+    endShape();
+
+    // draw editable nodes
+    beginShape();
+    for (let i = 0; i < currentShape.length; i++) {
       if (isEditing) {
-        fill("red");
-        ellipse(currentShape[i].x, currentShape[i].y, 10);
-        noFill();
+        push();
+        strokeWeight(1);
+        fill("white");
+        rect(currentShape[i].x - 5, currentShape[i].y - 5, 10, 10);
+
+        pop();
       }
     }
     endShape();
+
+    if (!isEditing) {
+      showBrush();
+    }
   }
 
   function showBrush() {
-    let starSize = self.thickness;
-    let starX = mouseX - starSize / 2;
-    let starY = mouseY - starSize / 2;
-    image(star, starX, starY, starSize, starSize);
+    push();
+    stroke(0);
+    strokeWeight(1);
+    noFill();
+    ellipse(mouseX, mouseY, self.thickness, self.thickness);
+    pop();
   }
 }

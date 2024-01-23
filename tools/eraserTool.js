@@ -5,7 +5,6 @@ function EraserTool() {
   this.icon = "assets/eraser.svg";
   this.name = "eraser";
   this.draw = draw;
-  this.showBrush = showBrush;
 
   // local properties
   this.options = ["thickness"];

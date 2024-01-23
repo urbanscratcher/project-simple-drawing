@@ -1,5 +1,10 @@
 let toolbox = null;
 
+let star;
+function preload() {
+  star = loadImage("./assets/stamps/star.svg");
+}
+
 function setup() {
   // Create a canvas
   const containerEl = select(".canvasContainer");
@@ -20,6 +25,7 @@ function setup() {
   toolbox.addTool(new LineTool());
   toolbox.addTool(new SprayTool());
   toolbox.addTool(new EraserTool());
+  toolbox.addTool(new StampTool());
 
   // Background color setting
   background("#ffffff");

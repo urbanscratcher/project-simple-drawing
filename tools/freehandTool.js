@@ -5,7 +5,6 @@ function FreehandTool() {
   this.icon = "assets/freehand.svg";
   this.name = "freehand";
   this.draw = draw;
-  this.showBrush = showBrush;
 
   // local properties
   this.options = ["colorPalette", "thickness"];

@@ -23,15 +23,25 @@ function Toolbox() {
 
   function selectTool(toolName) {
     const searchedTool = this.tools.filter((tool) => tool.name === toolName);
-
     if (this.selectedTool === searchedTool[0]) return;
 
     searchedTool
       ? (this.selectedTool = searchedTool[0])
       : console.log(tooName + " not exists");
 
+    // clear option menu ui
+    let options = selectAll(".option");
+    console.log(options);
+    if (options.length > 0) {
+      options.forEach((el) => el.remove());
+    }
+
     // show option menu
     if (this.selectedTool?.options?.length > 0) {
+      if (this.selectedTool.hasOwnProperty("setup")) {
+        this.selectedTool.setup();
+      }
+
       const bgColorPaletteEl = select("#bgColorPalette");
       const colorPaletteEl = select("#colorPalette");
       const thicknessEl = select("#thickness");

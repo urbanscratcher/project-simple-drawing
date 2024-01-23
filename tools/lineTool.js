@@ -5,7 +5,6 @@ function LineTool() {
   this.icon = "assets/line.svg";
   this.name = "line";
   this.draw = draw;
-  this.showBrush = showBrush;
 
   // local properties
   this.options = ["colorPalette", "thickness"];

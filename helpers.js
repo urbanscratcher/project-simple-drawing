@@ -30,9 +30,3 @@ function isMouseOnCanvas(canvas) {
 
   return result;
 }
-
-const OPTIONS = {
-  COLOR_BG: "background_color",
-  COLOR_OUTLINE: "outline_color",
-  THICKNESS: "thickness",
-};

@@ -4,8 +4,8 @@ function LineTool() {
   this.name = "line";
   this.draw = draw;
   this.options2 = [
-    new Option(OPTIONS.THICKNESS, { value: 1 }),
-    new Option(OPTIONS.COLOR_OUTLINE, { value: "#000000" }),
+    new Option(OPTION.THICKNESS, { value: 1 }),
+    new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
   ];
 
   // states

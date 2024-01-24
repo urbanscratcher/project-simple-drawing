@@ -1,4 +1,12 @@
-function Option(optionName, initialValue) {
+const OPTION = {
+  COLOR_BG: "background_color",
+  COLOR_OUTLINE: "outline_color",
+  THICKNESS: "thickness",
+  SIZE: "size",
+  DENSITY: "density",
+};
+
+function Option(optionName, initialProps) {
   this.name = optionName;
   this.createEl = createEl;
 
@@ -14,17 +22,16 @@ function Option(optionName, initialValue) {
 
     // option type별 분기
     // case: color
-    if (
-      optionName === OPTIONS.COLOR_BG ||
-      optionName === OPTIONS.COLOR_OUTLINE
-    ) {
+    if (optionName === OPTION.COLOR_BG || optionName === OPTION.COLOR_OUTLINE) {
       el = createDiv();
 
-      const txtLabelEl = createP(optionName.split("_").join(" ").toUpperCase());
+      const txtLabelEl = createP(
+        (initialProps?.name || optionName.split("_").join(" ")).toUpperCase()
+      );
       txtLabelEl.class("txt label");
-      const codeLabelEl = createP(initialValue.value);
+      const codeLabelEl = createP(initialProps.value);
 
-      const colorEl = createColorPicker(initialValue.value);
+      const colorEl = createColorPicker(initialProps.value);
       colorEl.changed(() => {
         codeLabelEl.html(colorEl.value());
       });
@@ -37,14 +44,25 @@ function Option(optionName, initialValue) {
     }
 
     // case: range
-    if (optionName === OPTIONS.THICKNESS) {
+    if (
+      optionName === OPTION.THICKNESS ||
+      optionName === OPTION.SIZE ||
+      optionName === OPTION.DENSITY
+    ) {
       el = createDiv();
-      const txtLabelEl = createP(optionName.toUpperCase());
+      const txtLabelEl = createP(
+        (initialProps?.name || optionName).toUpperCase()
+      );
       txtLabelEl.class("txt label");
-      const numLabelEl = createP(1);
+      const numLabelEl = createP(initialProps.value);
       numLabelEl.class("num label");
 
-      const sliderEl = createSlider(1, 100, initialValue.value, 1);
+      const sliderEl = createSlider(
+        initialProps?.min || 1,
+        initialProps?.max || 100,
+        initialProps.value,
+        1
+      );
       sliderEl.class("slider option");
       sliderEl.mouseClicked(() => {
         numLabelEl.html(sliderEl.value());
@@ -65,5 +83,3 @@ function Option(optionName, initialValue) {
     return el;
   }
 }
-
-function numberOption(optionName, min, max) {}

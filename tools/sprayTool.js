@@ -1,28 +1,30 @@
 function SprayTool() {
-  const self = this;
-
   // global properties
   this.icon = "assets/spray.svg";
   this.name = "spray";
   this.draw = draw;
 
   // local properties
-  this.options = ["colorPalette"];
-  this.points = 35;
-  this.spread = 10;
-  this.color = null;
+  this.options = [];
+  this.options2 = [
+    new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
+    new Option(OPTION.SIZE, { value: 10, min: 10, max: 100 }),
+    new Option(OPTION.DENSITY, { value: 35, min: 35, max: 100 }),
+  ];
 
   function draw() {
     // optional setting
-    self.color = select("#colorPalette")?.value() || "black";
+    const color = this.options2[0].getValue();
+    const spread = this.options2[1].getValue();
+    const density = this.options2[2].getValue();
 
-    strokeWeight(1);
     if (mouseIsPressed) {
-      stroke(self.color);
-      for (var i = 0; i < this.points; i++) {
+      strokeWeight(1);
+      stroke(color);
+      for (var i = 0; i < density; i++) {
         point(
-          random(mouseX - this.spread, mouseX + this.spread),
-          random(mouseY - this.spread, mouseY + this.spread)
+          random(mouseX - spread, mouseX + spread),
+          random(mouseY - spread, mouseY + spread)
         );
       }
     }

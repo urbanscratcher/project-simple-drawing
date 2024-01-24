@@ -49,15 +49,14 @@ function FreehandTool() {
 
     if (doingNothing) {
       updatePixels();
-      showBrush(thickness);
+      showBrush(thickness, color);
     }
   }
 
-  function showBrush(thickness) {
+  function showBrush(thickness, color) {
     push();
-    stroke(0);
-    strokeWeight(1);
-    noFill();
+    noStroke();
+    fill(color);
     ellipse(mouseX, mouseY, thickness, thickness);
     pop();
   }

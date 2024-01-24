@@ -1,31 +1,17 @@
 function EraserTool() {
-  const self = this;
-
-  // global properties
   this.icon = "assets/eraser.svg";
   this.name = "eraser";
   this.draw = draw;
-
-  // local properties
-  this.options = ["thickness"];
-  this.thickness = null;
+  this.options2 = [new Option(OPTION.SIZE, { value: 10 })];
 
   // states
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
-  function showBrush() {
-    push();
-    stroke(0);
-    strokeWeight(1);
-    noFill();
-    ellipse(mouseX, mouseY, self.thickness, self.thickness);
-    pop();
-  }
 
   function draw() {
     // optional setting
-    self.thickness = select("#thickness")?.value() || 1;
+    const thickness = this.options2[0].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;
@@ -43,7 +29,7 @@ function EraserTool() {
 
     if (isErasing) {
       stroke("#ffffff");
-      strokeWeight(self.thickness);
+      strokeWeight(thickness);
       line(previousMouseX, previousMouseY, mouseX, mouseY);
       previousMouseX = mouseX;
       previousMouseY = mouseY;
@@ -58,7 +44,16 @@ function EraserTool() {
 
     if (doingNothing) {
       updatePixels();
-      showBrush();
+      showBrush(thickness);
     }
+  }
+
+  function showBrush(thickness) {
+    push();
+    stroke(0);
+    strokeWeight(1);
+    fill("#ffffff");
+    ellipse(mouseX, mouseY, thickness, thickness);
+    pop();
   }
 }

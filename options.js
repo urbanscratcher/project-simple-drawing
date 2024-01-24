@@ -61,7 +61,7 @@ function Option(optionName, initialProps) {
         initialProps?.min || 1,
         initialProps?.max || 100,
         initialProps.value,
-        1
+        initialProps?.step || 1
       );
       sliderEl.class("slider option");
       sliderEl.mouseClicked(() => {

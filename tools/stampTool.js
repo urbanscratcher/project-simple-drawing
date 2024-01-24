@@ -1,70 +1,24 @@
 function StampTool() {
-  const self = this;
-
   // global properties
   this.icon = "assets/stamp.svg";
   this.name = "stamp";
   this.draw = draw;
-  this.setup = setup;
-
-  // local properties
-  this.options = ["thickness"];
-  this.thickness = null;
-  this.density = null;
-  this.dispersion = null;
+  this.options = [
+    new Option(OPTION.SIZE, { value: 15, min: 1, max: 50 }),
+    new Option(OPTION.DENSITY, { value: 3, min: 1, max: 20 }),
+    new Option(OPTION.DISPERSION, { value: 40, min: 10, max: 200, step: 10 }),
+  ];
 
   // states
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
 
-  function setup() {
-    let optionsContainer = select("#optionsContainer");
-
-    // density txt label
-    let densityTxt = createP("Density");
-    densityTxt.parent(optionsContainer);
-    densityTxt.class("option");
-
-    // density slider
-    let densitySlider = createSlider(1, 20, 1, 1);
-    densitySlider.parent(optionsContainer);
-    densitySlider.id("density");
-    densitySlider.class("option");
-
-    // density label
-    let densityLabel = createP(densitySlider.value());
-    densityLabel.parent(optionsContainer);
-    densityLabel.class("option");
-    densitySlider.mouseReleased(() => {
-      densityLabel.html(densitySlider.value());
-    });
-
-    // dispersion txt label
-    let dispersionTxt = createP("Dispersion");
-    dispersionTxt.parent(optionsContainer);
-    dispersionTxt.class("option");
-
-    // dispersion slider
-    let dispersionSlider = createSlider(10, 100, 10, 10);
-    dispersionSlider.parent(optionsContainer);
-    dispersionSlider.id("dispersion");
-    dispersionSlider.class("option");
-
-    // dispersion label
-    let dispersionLabel = createP(dispersionSlider.value());
-    dispersionLabel.parent(optionsContainer);
-    dispersionLabel.class("option");
-    dispersionSlider.mouseReleased(() => {
-      dispersionLabel.html(dispersionSlider.value());
-    });
-  }
-
   function draw() {
     // optional setting
-    self.thickness = select("#thickness")?.value() || 1;
-    self.density = select("#density")?.value() || 1;
-    self.dispersion = select("#dispersion")?.value() || 1;
+    const size = this.options[0].getValue();
+    const density = this.options[1].getValue();
+    const dispersion = this.options[2].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;
@@ -75,24 +29,27 @@ function StampTool() {
     if (isStarting) {
       updatePixels();
       drawing = true;
-      for (let i = 0; i < self.density; i++) {
-        let starSize = self.thickness;
+
+      for (let i = 0; i < density; i++) {
         let starX = random(
-          mouseX - starSize / 2 - self.dispersion,
-          mouseX - starSize / 2 + self.dispersion
+          mouseX - size / 2 - dispersion,
+          mouseX - size / 2 + dispersion
         );
         let starY = random(
-          mouseY - starSize / 2 - self.dispersion,
-          mouseY - starSize / 2 + self.dispersion
+          mouseY - size / 2 - dispersion,
+          mouseY - size / 2 + dispersion
         );
-        image(star, starX, starY, starSize, starSize);
+
+        push();
+        image(star, starX, starY, size, size);
+        pop();
       }
       loadPixels();
     }
 
     if (isErasing) {
       stroke("#ffffff");
-      strokeWeight(self.thickness);
+      strokeWeight(size);
       line(previousMouseX, previousMouseY, mouseX, mouseY);
       previousMouseX = mouseX;
       previousMouseY = mouseY;
@@ -107,14 +64,13 @@ function StampTool() {
 
     if (doingNothing) {
       updatePixels();
-      showBrush();
+      showBrush(size);
     }
   }
 
-  function showBrush() {
-    let starSize = self.thickness;
-    let starX = mouseX - starSize / 2;
-    let starY = mouseY - starSize / 2;
-    image(star, starX, starY, starSize, starSize);
+  function showBrush(size) {
+    let starX = mouseX - size / 2;
+    let starY = mouseY - size / 2;
+    image(star, starX, starY, size, size);
   }
 }

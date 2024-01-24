@@ -3,10 +3,7 @@ function SprayTool() {
   this.icon = "assets/spray.svg";
   this.name = "spray";
   this.draw = draw;
-
-  // local properties
-  this.options = [];
-  this.options2 = [
+  this.options = [
     new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
     new Option(OPTION.SIZE, { value: 10, min: 10, max: 100 }),
     new Option(OPTION.DENSITY, { value: 30, min: 30, max: 200, step: 2 }),
@@ -14,9 +11,9 @@ function SprayTool() {
 
   function draw() {
     // optional setting
-    const color = this.options2[0].getValue();
-    const size = this.options2[1].getValue();
-    const density = this.options2[2].getValue();
+    const color = this.options[0].getValue();
+    const size = this.options[1].getValue();
+    const density = this.options[2].getValue();
 
     if (mouseIsPressed) {
       updatePixels();

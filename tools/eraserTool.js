@@ -2,7 +2,7 @@ function EraserTool() {
   this.icon = "assets/eraser.svg";
   this.name = "eraser";
   this.draw = draw;
-  this.options2 = [new Option(OPTION.SIZE, { value: 10 })];
+  this.options = [new Option(OPTION.SIZE, { value: 10 })];
 
   // states
   let previousMouseX = -1;
@@ -11,7 +11,7 @@ function EraserTool() {
 
   function draw() {
     // optional setting
-    const thickness = this.options2[0].getValue();
+    const thickness = this.options[0].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;

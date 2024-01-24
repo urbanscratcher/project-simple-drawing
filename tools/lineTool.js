@@ -3,7 +3,7 @@ function LineTool() {
   this.icon = "assets/line.svg";
   this.name = "line";
   this.draw = draw;
-  this.options2 = [
+  this.options = [
     new Option(OPTION.THICKNESS, { value: 1 }),
     new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
   ];
@@ -18,8 +18,8 @@ function LineTool() {
 
   function draw() {
     // options
-    const thickness = this.options2[0].getValue();
-    const color = this.options2[1].getValue();
+    const thickness = this.options[0].getValue();
+    const color = this.options[1].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && startMouseX === -1;

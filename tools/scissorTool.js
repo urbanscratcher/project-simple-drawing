@@ -21,8 +21,8 @@ function ScissorTool() {
 
   function draw() {
     // optional setting
-    self.color = select("#colorPalette")?.value() || "black";
-    self.thickness = select("#thickness")?.value() || 1;
+    const color = select("#colorPalette")?.value() || "black";
+    const thickness = select("#thickness")?.value() || 1;
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;

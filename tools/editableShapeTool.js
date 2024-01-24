@@ -1,19 +1,18 @@
 function EditableShapeTool() {
-  const self = this;
-
-  // global properties
   this.icon = "assets/editableShape.svg";
   this.name = "editableShape";
   this.draw = draw;
   this.setup = setup;
-
-  // local properties
-  this.options = ["colorPalette", "thickness"];
-  this.thickness = null;
+  this.options = [
+    new Option(OPTION.THICKNESS, { value: 1, min: 1, max: 10 }),
+    new Option(OPTION.COLOR_BG, { value: "#ffffff", name: "bg color" }),
+  ];
 
   // states
   let editing = false;
   let currentShape = [];
+  let thickness = this.options[0].value;
+  let bgColor = this.options[0].value;
 
   function setup() {
     let optionsContainer = select("#optionsContainer");
@@ -50,46 +49,48 @@ function EditableShapeTool() {
 
   function draw() {
     // optional setting
-    self.thickness = select("#thickness")?.value() || 1;
-    self.color = select("#colorPalette")?.value() || "black";
+    if (this.options?.length > 0) {
+      thickness = this.options[0].getValue();
+      bgColor = this.options[1].getValue();
+    }
+
+    updatePixels();
 
     // conditions
     const isStarting = mouseIsPressed && isMouseOnCanvas(canvasEl);
     const isEditing = editing;
-    const isEnding = !mouseIsPressed && editing;
     const doingNothing = !mouseIsPressed && !editing;
 
-    updatePixels();
-    if (isStarting) {
-      if (!isEditing) {
-        currentShape.push({
-          x: mouseX,
-          y: mouseY,
-        });
-      }
+    if (isStarting && !isEditing) {
+      console.log(isMouseOnCanvas(canvasEl));
+      currentShape.push({
+        x: mouseX,
+        y: mouseY,
+      });
+    }
 
-      if (isEditing) {
-        for (let i = 0; i < currentShape.length; i++) {
-          if (dist(currentShape[i].x, currentShape[i].y, mouseX, mouseY) < 15) {
-            currentShape[i].x = mouseX;
-            currentShape[i].y = mouseY;
-          }
+    if (isStarting && isEditing) {
+      for (let i = 0; i < currentShape.length; i++) {
+        if (dist(currentShape[i].x, currentShape[i].y, mouseX, mouseY) < 15) {
+          currentShape[i].x = mouseX;
+          currentShape[i].y = mouseY;
         }
       }
     }
 
+    // draw a figure
     beginShape();
-    strokeWeight(self.thickness);
-    fill(self.color);
+    strokeWeight(thickness);
+    fill(bgColor);
     for (let i = 0; i < currentShape.length; i++) {
       vertex(currentShape[i].x, currentShape[i].y);
     }
     endShape();
 
     // draw editable nodes
-    beginShape();
-    for (let i = 0; i < currentShape.length; i++) {
-      if (isEditing) {
+    if (isEditing) {
+      beginShape();
+      for (let i = 0; i < currentShape.length; i++) {
         push();
         strokeWeight(1);
         fill("white");
@@ -97,20 +98,20 @@ function EditableShapeTool() {
 
         pop();
       }
+      endShape();
     }
-    endShape();
 
-    if (!isEditing) {
-      showBrush();
+    if (doingNothing) {
+      showBrush(thickness);
     }
   }
 
-  function showBrush() {
+  function showBrush(thickness) {
     push();
     stroke(0);
     strokeWeight(1);
     noFill();
-    ellipse(mouseX, mouseY, self.thickness, self.thickness);
+    ellipse(mouseX, mouseY, thickness, thickness);
     pop();
   }
 }

@@ -14,9 +14,9 @@ function HelperFunctions() {
 function isMouseOnCanvas(canvas) {
   let result = false;
 
-  const canvasLeft = canvas.elt.offsetLeft;
+  const canvasLeft = 0;
   const canvasWidth = canvas.width;
-  const canvasTop = canvas.elt.offsetTop;
+  const canvasTop = 0;
   const canvasHeight = canvas.height;
 
   if (

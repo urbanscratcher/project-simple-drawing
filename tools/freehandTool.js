@@ -3,7 +3,7 @@ function FreehandTool() {
   this.icon = "assets/freehand.svg";
   this.name = "freehand";
   this.draw = draw;
-  this.options2 = [
+  this.options = [
     new Option(OPTION.THICKNESS, { value: 1 }),
     new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
   ];
@@ -15,8 +15,8 @@ function FreehandTool() {
 
   function draw() {
     // optional setting
-    const thickness = this.options2[0].getValue();
-    const color = this.options2[1].getValue();
+    const thickness = this.options[0].getValue();
+    const color = this.options[1].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;

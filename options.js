@@ -4,6 +4,7 @@ const OPTION = {
   THICKNESS: "thickness",
   SIZE: "size",
   DENSITY: "density",
+  DISPERSION: "dispersion",
 };
 
 function Option(optionName, initialProps) {
@@ -21,6 +22,12 @@ function Option(optionName, initialProps) {
     let el;
 
     // option type별 분기
+    // case: button
+    if (optionName === OPTION.BTN_EDIT || optionName === OPTION.BTN_FINISH) {
+      el = createButton(initialProps?.name || optionName);
+      this.valueEl = el;
+    }
+
     // case: color
     if (optionName === OPTION.COLOR_BG || optionName === OPTION.COLOR_OUTLINE) {
       el = createDiv();
@@ -47,7 +54,8 @@ function Option(optionName, initialProps) {
     if (
       optionName === OPTION.THICKNESS ||
       optionName === OPTION.SIZE ||
-      optionName === OPTION.DENSITY
+      optionName === OPTION.DENSITY ||
+      optionName === OPTION.DISPERSION
     ) {
       el = createDiv();
       const txtLabelEl = createP(

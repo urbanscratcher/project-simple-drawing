@@ -9,8 +9,6 @@ function Toolbox() {
     const searchedTool = this.tools.filter((tool) => tool.name === toolName);
 
     // check if exists
-    // const isAlreadyExist = this.selectedTool === searchedTool[0];
-    // if (isAlreadyExist) return;
     if (!searchedTool) {
       console.log(tooName + " not exists");
       return;
@@ -24,42 +22,19 @@ function Toolbox() {
       optionEls.forEach((el) => el.remove());
     }
 
-    // setup
-    if (this.selectedTool.hasOwnProperty("setup")) {
-      this.selectedTool.setup();
-    }
-
-    // display options2
+    // display options
     const optionsContainerEl = select("#optionsContainer");
-    const options2 = this.selectedTool?.options2;
-    if (options2?.length > 0) {
-      for (let i = 0; i < options2.length; i++) {
-        const el = options2[i].createEl();
+    const options = this.selectedTool?.options;
+    if (options?.length > 0) {
+      for (let i = 0; i < options.length; i++) {
+        const el = options[i].createEl();
         optionsContainerEl.child(el);
       }
     }
 
-    // display option menu ui
-    if (this.selectedTool?.options?.length > 0) {
-      const bgColorPaletteEl = select("#bgColorPalette");
-      const thicknessEl = select("#thickness");
-      const thicknessLabelEl = select("#thicknessLabel");
-
-      this.selectedTool.options.includes("bgColorPalette")
-        ? bgColorPaletteEl.class("")
-        : bgColorPaletteEl.class("hidden");
-
-      if (this.selectedTool.options.includes("thickness")) {
-        thicknessEl.class("");
-        thicknessLabelEl.class("");
-
-        thicknessEl.mouseReleased(() => {
-          thicknessLabelEl.html(thicknessEl.value());
-        });
-      } else {
-        thicknessEl.class("hidden");
-        thicknessLabelEl.class("hidden");
-      }
+    // setup
+    if (this.selectedTool.hasOwnProperty("setup")) {
+      this.selectedTool.setup();
     }
   }
 

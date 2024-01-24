@@ -4,16 +4,15 @@ let canvasEl;
 
 let star;
 function preload() {
-  star = loadImage("./assets/stamps/star.svg");
+  star = loadImage("assets/stamps/star.svg");
 }
 
 function setup() {
   // Create a canvas
   const containerEl = select(".canvasContainer");
-  canvasEl = createCanvas(
-    containerEl.size().width,
-    containerEl.size().height * 0.9
-  );
+  const width = containerEl.size().width;
+  const height = containerEl.size().height;
+  canvasEl = createCanvas(width, height);
   canvasEl.style("");
   canvasEl.parent(containerEl);
 

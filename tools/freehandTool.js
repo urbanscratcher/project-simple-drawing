@@ -1,34 +1,33 @@
 function FreehandTool() {
-  const self = this;
-
   // global properties
   this.icon = "assets/freehand.svg";
   this.name = "freehand";
   this.draw = draw;
 
   // local properties
-  this.options = ["colorPalette", "thickness"];
-  this.color = null;
-  this.thickness = null;
+  this.options2 = [
+    new ColorOption(OPTIONS.THICKNESS),
+    new ColorOption(OPTIONS.COLOR_OUTLINE, "#000000"),
+  ];
 
   // states
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
 
-  function showBrush() {
+  function showBrush(thickness) {
     push();
     stroke(0);
     strokeWeight(1);
     noFill();
-    ellipse(mouseX, mouseY, self.thickness, self.thickness);
+    ellipse(mouseX, mouseY, thickness, thickness);
     pop();
   }
 
   function draw() {
     // optional setting
-    self.color = select("#colorPalette")?.value() || "black";
-    self.thickness = select("#thickness")?.value() || 1;
+    const thickness = this.options2[0].getValue();
+    const color = this.options2[1].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && previousMouseX === -1;
@@ -41,12 +40,11 @@ function FreehandTool() {
       drawing = true;
       previousMouseX = mouseX;
       previousMouseY = mouseY;
-      loadPixels();
     }
 
     if (isDrawing) {
-      stroke(self.color);
-      strokeWeight(self.thickness);
+      stroke(color);
+      strokeWeight(thickness);
       line(previousMouseX, previousMouseY, mouseX, mouseY);
       previousMouseX = mouseX;
       previousMouseY = mouseY;
@@ -61,7 +59,7 @@ function FreehandTool() {
 
     if (doingNothing) {
       updatePixels();
-      showBrush();
+      showBrush(thickness);
     }
   }
 }

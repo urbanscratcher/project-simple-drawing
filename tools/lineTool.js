@@ -1,15 +1,14 @@
 function LineTool() {
-  const self = this;
-
   // global properties
   this.icon = "assets/line.svg";
   this.name = "line";
   this.draw = draw;
 
   // local properties
-  this.options = ["colorPalette", "thickness"];
-  this.color = null;
-  this.thickness = null;
+  this.options = ["thickness"];
+  this.options2 = [new ColorOption(OPTIONS.COLOR_OUTLINE, "#000000")];
+  this.color = "#000000";
+  this.thickness = 1;
 
   // states
   let startMouseX = -1;
@@ -24,14 +23,14 @@ function LineTool() {
     stroke(0);
     strokeWeight(1);
     noFill();
-    ellipse(mouseX, mouseY, self.thickness, self.thickness);
+    ellipse(mouseX, mouseY, this.thickness, this.thickness);
     pop();
   }
 
   function draw() {
     // optional setting
-    self.color = select("#colorPalette")?.value() || "black";
-    self.thickness = select("#thickness")?.value() || 1;
+    this.color = this.options2[0].getValue();
+    this.thickness = select("#thickness")?.value();
 
     // conditions
     const isStarting = mouseIsPressed && startMouseX === -1;
@@ -51,8 +50,8 @@ function LineTool() {
 
     if (isDrawing) {
       updatePixels();
-      stroke(self.color);
-      strokeWeight(self.thickness);
+      stroke(this.color);
+      strokeWeight(this.thickness);
       line(startMouseX, startMouseY, mouseX, mouseY);
     }
 

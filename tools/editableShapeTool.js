@@ -54,7 +54,7 @@ function EditableShapeTool() {
     self.color = select("#colorPalette")?.value() || "black";
 
     // conditions
-    const isStarting = mouseIsPressed && isMousePressedOnCanvas(canvasEl);
+    const isStarting = mouseIsPressed && isMouseOnCanvas(canvasEl);
     const isEditing = editing;
     const isEnding = !mouseIsPressed && editing;
     const doingNothing = !mouseIsPressed && !editing;

@@ -11,7 +11,7 @@ function HelperFunctions() {
   });
 }
 
-function isMousePressedOnCanvas(canvas) {
+function isMouseOnCanvas(canvas) {
   let result = false;
 
   const canvasLeft = canvas.elt.offsetLeft;
@@ -30,3 +30,9 @@ function isMousePressedOnCanvas(canvas) {
 
   return result;
 }
+
+const OPTIONS = {
+  COLOR_BG: "background_color",
+  COLOR_OUTLINE: "outline_color",
+  THICKNESS: "thickness",
+};

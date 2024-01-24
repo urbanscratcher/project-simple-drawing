@@ -1,55 +1,49 @@
-// a container object to store tools
-// - add new tools
-// - select a tool
+// A container object to store tools
 function Toolbox() {
-  const self = this;
-
   this.tools = [];
   this.selectedTool = null;
-  this.addTool = addTool;
   this.selectTool = selectTool;
-
-  function addTool(tool) {
-    // Check if the tool has icon & name
-    if (!tool.hasOwnProperty("icon") || !tool.hasOwnProperty("name")) {
-      console.log("도구를 추가하기 위해서는 이름과 아이콘이 있어야 합니다");
-      return;
-    }
-
-    // add tool
-    this.tools.push(tool);
-    addToolIcon(tool);
-  }
+  this.addTool = addTool;
 
   function selectTool(toolName) {
     const searchedTool = this.tools.filter((tool) => tool.name === toolName);
-    if (this.selectedTool === searchedTool[0]) return;
 
-    searchedTool
-      ? (this.selectedTool = searchedTool[0])
-      : console.log(tooName + " not exists");
-
-    // clear option menu ui
-    let options = selectAll(".option");
-    console.log(options);
-    if (options.length > 0) {
-      options.forEach((el) => el.remove());
+    // check if exists
+    // const isAlreadyExist = this.selectedTool === searchedTool[0];
+    // if (isAlreadyExist) return;
+    if (!searchedTool) {
+      console.log(tooName + " not exists");
+      return;
+    } else {
+      this.selectedTool = searchedTool[0];
     }
 
-    // show option menu
-    if (this.selectedTool?.options?.length > 0) {
-      if (this.selectedTool.hasOwnProperty("setup")) {
-        this.selectedTool.setup();
-      }
+    // clear option menu ui
+    let optionEls = selectAll(".option");
+    if (optionEls.length > 0) {
+      optionEls.forEach((el) => el.remove());
+    }
 
+    // setup
+    if (this.selectedTool.hasOwnProperty("setup")) {
+      this.selectedTool.setup();
+    }
+
+    // display options2
+    const optionsContainerEl = select("#optionsContainer");
+    if (this.selectedTool?.options2?.length > 0) {
+      const options = this.selectedTool.options2;
+      for (let i = 0; i < options.length; i++) {
+        const el = options[i].createEl();
+        optionsContainerEl.child(el);
+      }
+    }
+
+    // display option menu ui
+    if (this.selectedTool?.options?.length > 0) {
       const bgColorPaletteEl = select("#bgColorPalette");
-      const colorPaletteEl = select("#colorPalette");
       const thicknessEl = select("#thickness");
       const thicknessLabelEl = select("#thicknessLabel");
-
-      this.selectedTool.options.includes("colorPalette")
-        ? colorPaletteEl.class("")
-        : colorPaletteEl.class("hidden");
 
       this.selectedTool.options.includes("bgColorPalette")
         ? bgColorPaletteEl.class("")
@@ -69,31 +63,27 @@ function Toolbox() {
     }
   }
 
-  // add a new tool to html
-  function addToolIcon(tool) {
-    // make image element
-    const imgEl = createImg(tool.icon, tool.name);
+  function addTool(tool) {
+    // add a tool
+    const hasIconAndName =
+      tool.hasOwnProperty("icon") && tool.hasOwnProperty("name");
+    if (!hasIconAndName) {
+      console.log("Need icons and names of a tool");
+      return;
+    }
+    this.tools.push(tool);
 
-    // let image element in list
+    // display
+    const imgEl = createImg(tool.icon, tool.name);
     const liEl = createElement("li");
     liEl.class(`btn`);
     liEl.id(tool.name);
     imgEl.parent(liEl);
-
-    // add click event
-    liEl.mouseClicked(toolClickHandler);
-
-    // position: in sidebar
+    liEl.mouseClicked(() => {
+      this.selectTool(tool.name);
+      loadPixels();
+    });
     const sidebarEl = select(".sidebar");
     liEl.parent(sidebarEl);
-  }
-
-  function toolClickHandler() {
-    // styling on click
-    const toolName = this.id();
-    self.selectTool(toolName);
-
-    // Make sure most recent changes are saved to pixel array
-    loadPixels();
   }
 }

@@ -3,26 +3,15 @@ function FreehandTool() {
   this.icon = "assets/freehand.svg";
   this.name = "freehand";
   this.draw = draw;
-
-  // local properties
   this.options2 = [
-    new ColorOption(OPTIONS.THICKNESS),
-    new ColorOption(OPTIONS.COLOR_OUTLINE, "#000000"),
+    new Option(OPTIONS.THICKNESS, { value: 1 }),
+    new Option(OPTIONS.COLOR_OUTLINE, { value: "#000000" }),
   ];
 
   // states
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
-
-  function showBrush(thickness) {
-    push();
-    stroke(0);
-    strokeWeight(1);
-    noFill();
-    ellipse(mouseX, mouseY, thickness, thickness);
-    pop();
-  }
 
   function draw() {
     // optional setting
@@ -40,6 +29,7 @@ function FreehandTool() {
       drawing = true;
       previousMouseX = mouseX;
       previousMouseY = mouseY;
+      loadPixels();
     }
 
     if (isDrawing) {
@@ -61,5 +51,14 @@ function FreehandTool() {
       updatePixels();
       showBrush(thickness);
     }
+  }
+
+  function showBrush(thickness) {
+    push();
+    stroke(0);
+    strokeWeight(1);
+    noFill();
+    ellipse(mouseX, mouseY, thickness, thickness);
+    pop();
   }
 }

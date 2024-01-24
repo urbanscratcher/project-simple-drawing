@@ -31,10 +31,10 @@ function Toolbox() {
 
     // display options2
     const optionsContainerEl = select("#optionsContainer");
-    if (this.selectedTool?.options2?.length > 0) {
-      const options = this.selectedTool.options2;
-      for (let i = 0; i < options.length; i++) {
-        const el = options[i].createEl();
+    const options2 = this.selectedTool?.options2;
+    if (options2?.length > 0) {
+      for (let i = 0; i < options2.length; i++) {
+        const el = options2[i].createEl();
         optionsContainerEl.child(el);
       }
     }

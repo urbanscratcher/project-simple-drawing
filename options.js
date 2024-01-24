@@ -1,7 +1,5 @@
-// proper way for OOP
-function ColorOption(optionName, initialColorCode) {
+function Option(optionName, initialValue) {
   this.name = optionName;
-  this.value = initialColorCode || "#ffffff";
   this.createEl = createEl;
 
   this.valueEl = null;
@@ -24,9 +22,9 @@ function ColorOption(optionName, initialColorCode) {
 
       const txtLabelEl = createP(optionName.split("_").join(" ").toUpperCase());
       txtLabelEl.class("txt label");
-      const codeLabelEl = createP(this.value);
+      const codeLabelEl = createP(initialValue.value);
 
-      const colorEl = createColorPicker(initialColorCode || "#ffffff");
+      const colorEl = createColorPicker(initialValue.value);
       colorEl.changed(() => {
         codeLabelEl.html(colorEl.value());
       });
@@ -46,7 +44,7 @@ function ColorOption(optionName, initialColorCode) {
       const numLabelEl = createP(1);
       numLabelEl.class("num label");
 
-      const sliderEl = createSlider(1, 100, 1, 1);
+      const sliderEl = createSlider(1, 100, initialValue.value, 1);
       sliderEl.class("slider option");
       sliderEl.mouseClicked(() => {
         numLabelEl.html(sliderEl.value());

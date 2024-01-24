@@ -3,12 +3,10 @@ function LineTool() {
   this.icon = "assets/line.svg";
   this.name = "line";
   this.draw = draw;
-
-  // local properties
-  this.options = ["thickness"];
-  this.options2 = [new ColorOption(OPTIONS.COLOR_OUTLINE, "#000000")];
-  this.color = "#000000";
-  this.thickness = 1;
+  this.options2 = [
+    new Option(OPTIONS.THICKNESS, { value: 1 }),
+    new Option(OPTIONS.COLOR_OUTLINE, { value: "#000000" }),
+  ];
 
   // states
   let startMouseX = -1;
@@ -18,19 +16,10 @@ function LineTool() {
   const adjustWidth = select(".sidebar").size().width;
   const adjustHeight = select("header").height;
 
-  function showBrush() {
-    push();
-    stroke(0);
-    strokeWeight(1);
-    noFill();
-    ellipse(mouseX, mouseY, this.thickness, this.thickness);
-    pop();
-  }
-
   function draw() {
-    // optional setting
-    this.color = this.options2[0].getValue();
-    this.thickness = select("#thickness")?.value();
+    // options
+    const thickness = this.options2[0].getValue();
+    const color = this.options2[1].getValue();
 
     // conditions
     const isStarting = mouseIsPressed && startMouseX === -1;
@@ -43,28 +32,35 @@ function LineTool() {
       startMouseX = mouseX;
       startMouseY = mouseY;
       drawing = true;
-
-      // loads the current value of each pixel on the canvas into the 'pixels' array
       loadPixels();
     }
 
     if (isDrawing) {
       updatePixels();
-      stroke(this.color);
-      strokeWeight(this.thickness);
+      stroke(color);
+      strokeWeight(thickness);
       line(startMouseX, startMouseY, mouseX, mouseY);
     }
 
     if (isEnding) {
-      loadPixels();
       drawing = false;
       startMouseX = -1;
       startMouseY = -1;
+      loadPixels();
     }
 
     if (doingNothing) {
       updatePixels();
-      showBrush();
+      showBrush(thickness);
     }
+  }
+
+  function showBrush(thickness) {
+    push();
+    stroke(0);
+    strokeWeight(1);
+    noFill();
+    ellipse(mouseX, mouseY, thickness, thickness);
+    pop();
   }
 }

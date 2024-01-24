@@ -6,28 +6,100 @@ function ScissorTool() {
   this.name = "scissor";
   this.draw = draw;
   this.setup = setup;
-
-  // local properties
-  this.options = ["colorPalette"];
-  this.color = null;
-  this.thickness = null;
+  this.options = [
+    new Option(OPTION.THICKNESS, { value: 1 }),
+    new Option(OPTION.COLOR_OUTLINE, { value: "#000000", name: "color" }),
+  ];
 
   // states
   let previousMouseX = -1;
   let previousMouseY = -1;
   let drawing = false;
+  let selectMode = 0;
+  let selectedArea = { x: -100, y: -100, w: 100, h: 100 };
+  let selectedPixels = [];
 
-  function setup() {}
+  this.mousePressed = mousePressed;
+  this.mouseDragged = mouseDragged;
+
+  function setup() {
+    const optionsContainer = select("#optionsContainer");
+
+    // select btn
+    const selectBtn = createButton("Select Area");
+    selectBtn.class("option");
+    selectBtn.id("selectArea");
+    selectBtn.parent(optionsContainer);
+    selectBtn.mousePressed(() => {
+      switch (selectMode) {
+        case 0:
+          // draw -> cut
+          selectMode += 1;
+          selectBtn.html("Cut");
+          loadPixels(); // store current frame
+          break;
+        case 1:
+          // cut -> paste
+          selectMode += 1;
+          selectBtn.html("End Paste");
+          updatePixels();
+
+          selectedPixels = get(
+            selectedArea.x,
+            selectedArea.y,
+            selectedArea.w,
+            selectedArea.h
+          );
+
+          fill(255);
+          noStroke();
+          rect(selectedArea.x, selectedArea.y, selectedArea.w, selectedArea.h);
+
+          break;
+        case 2:
+          // paste -> finish
+          selectMode = 0;
+          selectedArea = { x: -100, y: -100, w: 100, h: 100 };
+          selectBtn.html("Select Area");
+          loadPixels();
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  function mousePressed() {
+    if (selectMode === 1 && isMouseOnCanvas(canvasEl)) {
+      selectedArea.x = mouseX;
+      selectedArea.y = mouseY;
+    } else if (selectMode === 2) {
+      image(selectedPixels, mouseX, mouseY);
+    }
+  }
+
+  function mouseDragged() {
+    if (selectMode === 1 && isMouseOnCanvas(canvasEl)) {
+      let w = mouseX - selectedArea.x;
+      let h = mouseY - selectedArea.y;
+      selectedArea.w = w;
+      selectedArea.h = h;
+    }
+  }
 
   function draw() {
     // optional setting
-    const color = select("#colorPalette")?.value() || "black";
-    const thickness = select("#thickness")?.value() || 1;
+    const thickness = this.options[0].getValue();
+    const color = this.options[1].getValue();
 
     // conditions
-    const isStarting = mouseIsPressed && previousMouseX === -1;
-    const isDrawing = mouseIsPressed && previousMouseX !== -1;
-    const isEnding = !mouseIsPressed && drawing;
+    const isStarting =
+      mouseIsPressed && selectMode === 0 && previousMouseX === -1;
+    const isDrawing =
+      mouseIsPressed && selectMode === 0 && previousMouseX !== -1;
+    const isEnding = !mouseIsPressed && selectMode === 0 && drawing;
+    const isCutting =
+      mouseIsPressed && selectMode === 1 && previousMouseX === -1;
     const doingNothing = !mouseIsPressed && !drawing;
 
     if (isStarting) {
@@ -39,8 +111,8 @@ function ScissorTool() {
     }
 
     if (isDrawing) {
-      stroke(self.color);
-      strokeWeight(self.thickness);
+      stroke(color);
+      strokeWeight(thickness);
       line(previousMouseX, previousMouseY, mouseX, mouseY);
       previousMouseX = mouseX;
       previousMouseY = mouseY;
@@ -53,18 +125,11 @@ function ScissorTool() {
       loadPixels();
     }
 
-    if (doingNothing) {
+    if (isCutting) {
       updatePixels();
-      showBrush();
+      noStroke();
+      fill(200, 200, 200, 80);
+      rect(selectedArea.x, selectedArea.y, selectedArea.w, selectedArea.h);
     }
   }
-}
-
-function showBrush() {
-  push();
-  stroke(0);
-  strokeWeight(1);
-  noFill();
-  ellipse(mouseX, mouseY, self.thickness, self.thickness);
-  pop();
 }

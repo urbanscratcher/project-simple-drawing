@@ -15,10 +15,10 @@ function EditableShapeTool() {
   let bgColor = this.options[0].value;
 
   function setup() {
-    let optionsContainer = select("#optionsContainer");
+    const optionsContainer = select("#optionsContainer");
 
     // edit btn
-    let editBtn = createButton("Edit Shape");
+    const editBtn = createButton("Edit Shape");
     editBtn.class("option");
     editBtn.id("editShape");
     editBtn.parent(optionsContainer);
@@ -34,7 +34,7 @@ function EditableShapeTool() {
     });
 
     // finish btn
-    let finishBtn = createButton("Finish Shape");
+    const finishBtn = createButton("Finish Shape");
     finishBtn.class("option");
     finishBtn.id("finishShape");
     finishBtn.parent(optionsContainer);

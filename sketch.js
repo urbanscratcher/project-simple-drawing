@@ -46,3 +46,23 @@ function draw() {
     }
   }
 }
+
+function mousePressed() {
+  if (toolbox?.tools?.length > 0) {
+    for (let i = 0; i < toolbox.tools.length; i++) {
+      if (toolbox.tools[i].hasOwnProperty("mousePressed")) {
+        toolbox.tools[i].mousePressed();
+      }
+    }
+  }
+}
+
+function mouseDragged() {
+  if (toolbox?.tools?.length > 0) {
+    for (let i = 0; i < toolbox.tools.length; i++) {
+      if (toolbox.tools[i].hasOwnProperty("mouseDragged")) {
+        toolbox.tools[i].mouseDragged();
+      }
+    }
+  }
+}

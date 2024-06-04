@@ -1,49 +1,52 @@
-# Simple Drawing App
+# Simple Drawing
 
-- A simple drawing app made with p5.js
+November 2023 ~ January 2024 (3 months)
 
-## Purpose
-
-- Practice p5.js DOM
-- Learn the principles of drawing tools
+This is a simple drawing web application made with p5js.
 
 ## Features
+- **Freehand drawing**: Set color and stroke weight for freehand drawing.
+- **Line**: Set color and stroke weight for line drawing.
+- **Eraser**: Set eraser size.
+- **Spray**: Set spray color, size, and density.
+- **Fill**: Set fill color, density, and spread.
+- **Free transform**: Adjust control points after drawing freehand lines.
+- **Cut and paste**: Cut and paste parts of the drawing.
+- **Blank canvas**: Clear the drawing and load a blank canvas.
+- **Save file**: Save as a png file.
+- **State preservation**: Maintains color, stroke weight, and other options even when switching tools.
 
-- Free drawing (select color, thickness)
-- Straight line (select color, thickness)
-- Eraser (select thickness)
-- Spray (select color)
-- Clear all
-- Save as png file
-- Retain options like color and thickness when switching tools
+## Technical Focus
+- Practiced using the p5js DOM library.
+- Learned the principles of drawing tools.
 
 ## Demo
+<video src="https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133" controls></video>
 
-[demo-drawing.webm](https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133)
+[Visit the Site](https://joun-drawing.netlify.app)
 
-## URL
+## Tech Stack
 
-- https://joun-drawing.netlify.app
+### Frontend
+- **Library**: p5js, p5js DOM
+- **Language**: JavaScript
 
-## Libraries & Technologies Used
+### Backend
+- None
 
-- p5.js
-- p5.js DOM
+### Cloud Services and Deployment
+- **Hosting and deployment**: Netlify
 
-## Development Notes
+---
 
-- Got inspired while looking through tutorials and made this quickly
-- The concept of looping frames is crucial in p5.js, but I still find it a bit tricky. Need to dive deeper.
-- As a web developer, I find p5.js DOM a bit lacking, especially in state management and node selection. Also, readability could be improved.
+## Reflection
+- I found tutorials on how to create a drawing board and tried to make a simple one.
+- The concept of p5js having a looping frame is important, but I still don't have a good grasp of it. I think I need to study it more.
+- p5js DOM seems to have some limitations, especially in terms of state management and node selection. And the readability wasn't very good.
+  
+## Next
 
-## Future Improvements
-
-- Considering classifying the code
-- Select
-- Undo/Redo
-- Zoom
-- Load 3D models (.obj)
-- Key press events for "\[", "\[" to adjust weight
-- Development ideas
-  - Feature that gives random words and sets a timer for drawing
-  - Analyze frequently used colors for abstract art
+- I'm considering whether or not to refactor the code into classes.
+- I think I can add various features like select, undo/redo, zoom, 3D model loading, etc.
+- I want to make it so that you can adjust the weight using the "[" and "]" keys like in Photoshop.
+- For some new ideas, I thought about making a feature where a random word is thrown at you and you have to draw a picture within a time limit, or a feature that shows the statistics of the most frequently used colors after drawing a picture.

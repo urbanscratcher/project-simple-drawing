@@ -21,7 +21,7 @@ This is a simple drawing web application made with p5js.
 - Learned the principles of drawing tools.
 
 ## Demo
-<video src="https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133" controls></video>
+<video src="https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/25af8bf5-355f-4ec5-8836-8167fe52ceab" controls></video>
 
 [Visit the Site](https://joun-drawing.netlify.app)
 

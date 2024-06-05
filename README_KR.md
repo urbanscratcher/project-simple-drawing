@@ -21,7 +21,7 @@ p5js로 만든 간단한 그림판 웹사이트입니다.
 - 드로잉 툴 원리를 익혀 보았습니다.
 
 ## 시연
-[demo-drawing.webm](https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/7f3eb368-1d08-4daf-9ac2-f385d349c133)
+<video src="https://github.com/urbanscratcher/project-simple-drawing/assets/17016494/25af8bf5-355f-4ec5-8836-8167fe52ceab" controls></video>
 
 [사이트 바로가기](https://joun-drawing.netlify.app)
 
